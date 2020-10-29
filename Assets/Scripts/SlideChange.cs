@@ -16,7 +16,7 @@ public class SlideChange : PlayableBehaviour
         spriteObject = GameObject.FindGameObjectWithTag("Window");
     }
 
-    //PlayableTrack(コマ)再生時実行される
+    //PlayableAsset(コマ)再生時実行される
     public override void OnBehaviourPlay( Playable playable, FrameData info ) {
         
         //スライドの画像(Sprite)を変更
