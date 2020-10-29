@@ -12,14 +12,65 @@ Playable Trackの理解
 
 [![Playing Slide TimeLine](http://img.youtube.com/vi/Si_4G2xJgKY/0.jpg)](http://www.youtube.com/watch?v=Si_4G2xJgKY "Playing Slide TimeLine")
 
+## Playable Trackのメリット
+- 時間管理が楽
+- 動画のタイミングに合わせた空間演出が可能(プレゼンや研修動画などを3Dデザインできる)
+- スクリプトが分からない人に仕事を任せられる
+
 ## 設定方法
 1. PlayableBehaviourクラスを継承したクラスで、振る舞いを設定
-```
+```C#:SlideChange.cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Playables;
+
+public class SlideChange : PlayableBehaviour
+{
+    public Sprite slideImage;
+    public GameObject spriteObject;
+
+    //タイムライン開始時実行される
+    public override void OnGraphStart( Playable playable ) {
+        base.OnGraphStart( playable );
+        
+        //スライドを表示するGameObjectを取得
+        spriteObject = GameObject.FindGameObjectWithTag("Window");
+    }
+
+    //PlayableAsset(コマ)再生時実行される
+    public override void OnBehaviourPlay( Playable playable, FrameData info ) {
+        
+        //スライドの画像(Sprite)を変更
+        spriteObject.GetComponent<SpriteRenderer>().sprite = slideImage;
+    
+    }
+}
 ```
 
 
 2. PlayableAssetクラスを継承したクラスで、振る舞いをTrack上に差し込めるAssetを作成
-```
+```C#:SlideAsset.cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Playables;
+
+public class SlideAsset : PlayableAsset
+{
+    public Sprite image;
+
+    public override Playable CreatePlayable( PlayableGraph graph, GameObject owner ) {
+        //PlayableBehaviourを継承したSlideChangeクラスを元に、PlayableAsset(コマ)を作る
+        var player = ScriptPlayable<SlideChange>.Create( graph );
+        
+        //SlideChangeクラスにあるプロパティを設定
+        var behaviour = player.GetBehaviour();
+        behaviour.slideImage = image;
+        
+        return player;
+    }
+}
 ```
 
 3. UnityのGUIでTimelineのPlayable Track上にPlayable Assetを挿入(右クリックで勝手に出てくる)
