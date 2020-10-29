@@ -73,6 +73,12 @@ public class SlideAsset : PlayableAsset
 }
 ```
 
+```
+※基本的にはPlayableAssetでコマの設定が出来、そのPropertyを設定できる。ただしMonobehaviourを継承していないので、Scene内のものを取得したい場合は
+ExposedReference<ほにゃらら>
+といった記述が必要になる。
+```
+
 3. UnityのGUIでTimelineのPlayable Track上にPlayable Assetを挿入(右クリックで勝手に出てくる)
 ![add slide asset](https://user-images.githubusercontent.com/62923803/97622618-dd331c00-1a67-11eb-97d6-e279e5ed750a.jpg)
 
