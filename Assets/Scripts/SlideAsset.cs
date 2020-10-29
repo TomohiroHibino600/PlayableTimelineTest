@@ -8,7 +8,7 @@ public class SlideAsset : PlayableAsset
     public Sprite image;
 
     public override Playable CreatePlayable( PlayableGraph graph, GameObject owner ) {
-        //PlayableBehaviourを継承したSlideChangeクラスを元に、PlayableTrack(コマ)を作る
+        //PlayableBehaviourを継承したSlideChangeクラスを元に、PlayableAsset(コマ)を作る
         var player = ScriptPlayable<SlideChange>.Create( graph );
         
         //SlideChangeクラスにあるプロパティを設定
